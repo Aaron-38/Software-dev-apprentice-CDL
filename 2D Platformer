@@ -1,0 +1,134 @@
+#  This code was used to program my 2D platformer game using GAME MAKER, the language used by Game maker is GML which shares similarities in syntax to Java. #
+
+hsp = 0;
+vsp = 0;
+grv = 0.3;
+walksp = 6;
+hascontrol = true 
+mvtLocked = 0
+
+// Initialize particle system for player death
+part_sys = part_system_create();
+
+
+
+// Create particle type 
+part_type = part_type_create();
+part_type_shape(part_type, pt_shape_cloud);      // Shape of the particle
+part_type_size(part_type, 0.1, 0.3,0,0.1);//ize range
+part_type_color1(part_type, c_red);              // Color of the particle
+part_type_alpha1(part_type, 1);                  // Alpha (transparency)
+part_type_speed(part_type, 1, 0.1,0,0);       // Speed of the particles
+part_type_direction(part_type, 0,180,0,0);//ection (360° spread)
+part_type_gravity(part_type, 0,30);     // Gravity effect
+part_type_life(part_type, 20,40);       // Lifetime of the particles
+
+
+
+//getplayer input
+if (hascontrol)
+{
+key_left = keyboard_check(vk_left);
+key_right = keyboard_check(vk_right);
+key_jump = keyboard_check_pressed(vk_up);
+}
+else
+{
+	key_right = 0;
+	key_left = 0;
+	key_jump = 0;
+}
+// calculate movement
+var move = key_right - key_left
+
+hsp = move * walksp; 
+
+//gravity enable
+vsp = vsp + grv;
+
+//jump movement
+
+if (place_meeting(x,y+1,O_wall)) and (key_jump)
+{
+	vsp = -7;
+}
+
+//horizontal collision box
+
+if (place_meeting(x+hsp,y,O_wall)) 
+
+{
+	while (!place_meeting(x+sign(hsp),y,O_wall))
+	{
+		x = x + sign(hsp);
+	}	
+	hsp = 0;
+}
+if (place_meeting(x+hsp,y,O_wall_1)) 
+
+{
+	while (!place_meeting(x+sign(hsp),y,O_wall_1))
+	{
+		x = x + sign(hsp);
+	}	
+	hsp = 0;
+}
+
+x = x + hsp;
+
+//vertical collision box
+
+if (place_meeting(x,y+vsp,O_wall))
+
+{
+	while (!place_meeting(x,y+sign(vsp),O_wall))
+	{
+		y = y + sign(vsp);
+	}	
+	vsp = 0;
+}
+if (place_meeting(x,y+vsp,O_wall_1))
+
+{
+	while (!place_meeting(x,y+sign(vsp),O_wall_1))
+	{
+		y = y + sign(vsp);
+	}	
+	vsp = 0;
+}
+y = y + vsp;
+
+
+//ANIMATION
+// jump animation
+
+if (!place_meeting(x,y+1,O_wall))
+{
+	sprite_index = SJUMP;
+	image_speed = 0;
+	if (sign(vsp) > 0) image_index = 1; else image_index = 0;
+    
+}
+else
+{
+	image_speed = 1;
+	//IDLE ANIMATION
+	if (hsp = 0)
+	{  
+		sprite_index = Spurp
+	}
+//RUN ANIMATION
+	else
+	{
+		sprite_index = SRUN;
+	}
+
+}
+
+//PLAYER ORIENTATION RUN ANIMATION (*2 because sprites were made at wrong size 
+if (hsp != 0) image_xscale = sign(hsp) * 2;
+
+//room restart out of bounds
+if(x > room_width) || (x < 0) || (y > room_height) || (y < 0) {
+    room_restart();
+}
