@@ -1,0 +1,86 @@
+# This was a text adventure project i pursued in python to familiarise myself with the fundamentals of coding #
+
+import sys
+
+
+welcome_message = """///Welcome to the Tower of Calmar/// 
+
+I will be guiding you through this journey as i have for many other failed adventurers before you. 
+
+You may not think of me as an ally but as more of a... Spectator. For my own amusement of course.
+
+Lets not get too friendly, you can refer to me as -- THE HOST --
+
+"""
+print(welcome_message)
+
+Player_name_get = input("What is your name traveller?... ")
+print("""
+Greetings """ + Player_name_get)
+
+Player_class_select = input("""
+-What is your class?- 
+
+/warrior/   /mage/   /thief/   """)
+
+if Player_class_select == "warrior":  
+  print("Ahhhh. " + Player_name_get + " the Warrior, a user of strength to strike down foes...") 
+elif Player_class_select == "mage":
+  print("Ahhhh. " + Player_name_get + " the Mage, a student of the arcane arts...") 
+elif Player_class_select == "thief":
+ print("Ahhhh. " + Player_name_get + " the Thief, a sneaky little devil you are...")
+else:
+  print("Very funny... As you wish.") 
+
+
+import random
+
+
+print("In front of you is a hellish imp! flapping its wings it excudes flames from its hands ready to throw at you!")
+
+#player attack and hp#
+player_dmg = random.randint(0,10)
+playerhp = 20
+potion_amt = 2
+potionhp = 10
+
+#imp attack and hp#
+imphp = 20
+imp_dmg = random.randint(0,7)
+
+
+encounter1 = input("Attack first? ")
+if encounter1 == "y":
+  print("you attack the imp for " + str(player_dmg) + " damage!") 
+  imphp = imphp - player_dmg
+  print("The imp has " + str(imphp) + " hit points remaining!")
+  print("The imp hurls a bolt of fire at you dealing " + str(imp_dmg) + " damage!")
+  playerhp = playerhp - imp_dmg
+  print("You have " + str(playerhp) + " hit points remaining!")
+elif print("The imp hurls a bolt of fire at you dealing " + str(imp_dmg) + " damage!"):
+ playerhp = playerhp - imp_dmg
+ print("You have " + str(playerhp) + " hit points remaining!")
+
+
+####  TURN2  #############################################
+encounter1t2 = input("---TURN2: Attack or use a potion?--- ")
+
+if encounter1t2 == "attack":
+ print("you attack the imp for " + str(player_dmg) + " damage!") 
+ imphp = imphp - player_dmg
+ print("The imp has " + str(imphp) + " hit points remaining!")
+ print("The imp hurls a bolt of fire at you dealing " + str(imp_dmg) + " damage!")
+ playerhp = playerhp - imp_dmg
+ print("You have " + str(playerhp) + " hit points remaining!")
+elif encounter1t2 == "potion":
+   potionuse = playerhp + potionhp
+   potion_amt = potion_amt - 1
+   if potionuse >= 20:
+    playerhp = 20
+    print("The potion restores you to " + str(playerhp) + " hit points and you have " + str(potion_amt) + " potion remaining")
+
+if imphp <= 0: 
+ print("You defeated the imp!")
+ end_encounter1 = print("with the imp defeated you claim your domain over the room!")
+
+
